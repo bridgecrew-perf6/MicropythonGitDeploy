@@ -1,6 +1,6 @@
 from ftplib import FTP
 from os import walk
-
+import secrets
 
 
 class FTPPusher:
@@ -15,7 +15,7 @@ class FTPPusher:
                 completePath = dirpath + "\\" + fileName
                 with open(completePath, "rb") as fp:
                     ftp.storbinary("STOR " + fileName, fp)
-                print("Wrote: " + completePath + " to device ")
+                print("Wrote: " + completePath + " to device ", flush=True)
 
     def push(self):
         with FTP(self.clientID, timeout=10) as ftp:
@@ -23,7 +23,7 @@ class FTPPusher:
             ftp.login(user=self.username, passwd=self.password)
             ftp.cwd('flash')
             for (dirpath, dirnames, filenames) in walk(mypath):
-                if not ".\.git" in dirpath:
+                if not ".\.git" in dirpath and not "__pycache__" in dirpath:
                     print("Dirpath:" + dirpath)
                     if "." == dirpath:
                         self._pushAllPyFiles(ftp, dirpath, filenames)
@@ -50,11 +50,9 @@ class FTPPusher:
             return True
 
 
-clients = ["192.168.1.138"]
-userName = 'micro'
-passwd = 'python'
 
 
-for client in clients:
-    f = FTPPusher(client, userName, passwd)
+for client in secrets.clients:
+    print("Connecting to " + client, flush=True)
+    f = FTPPusher(client, secrets.userName, secrets.passwd)
     f.push()
