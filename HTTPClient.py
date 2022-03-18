@@ -21,13 +21,13 @@ class HTTPClient:
         self.s.setblocking(True)
         self.s.settimeout(0.5)
         self.accessToken = accessToken
-        print('socket connected')
+        #print('socket connected')
     
     def get(self, url):
         # it is possible to attach additional HTTP headers in the line below, but note to always close with \r\n\r\n
         authentication = "\r\nAuthorization: Basic " + self.accessToken
         httpreq = 'GET '+url+' HTTP/1.1\r\nHOST: '+ self.host + '\r\nUser-Agent: pycomer\r\nCache-Control: no-cache' + authentication + '\r\n\r\n'
-        print('http request: \n', httpreq)
+        #print('http request: \n', httpreq)
         self.s.send(httpreq)
 
 
@@ -42,10 +42,11 @@ class HTTPClient:
 
             while len(rec_bytes) != 0:
                 rec_bytes = self.s.recv(maxBytes)
-                print("Received: " + str(len(rec_bytes)))
+                #print("Received: " + str(len(rec_bytes)))
                 buffer = buffer + rec_bytes
         except:
-            print("crap")
+            #print("crap")
+            pass
         return HTTPResponse(bytes(buffer))
 
     def close(self):

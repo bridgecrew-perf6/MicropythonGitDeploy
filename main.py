@@ -19,6 +19,9 @@ while not wlan.isconnected():
 
 print('connected')
 
-gd = gitDeploy("dntoll", "micropython-git-deploy")
+
+filesToKeep=["secrets.py"]
+ignoreUpload=[".gitmodules", ".gitignore", 'pymakr.conf']
+gd = gitDeploy("dntoll", "micropython-git-deploy", filesToKeep, ignoreUpload)
 
 
