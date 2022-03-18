@@ -48,9 +48,9 @@ class DeployServer:
         if "GET / " in str(r):
             #this is a get response for the page   
             # Sends back some data
-            clientsocket.send(http + "<html><body><h1> You are connection "+ str(n) + "</h1><br> Your browser will send multiple requests <br> <a href='/hello'> hello!</a><br><a href='/color'>change led color!</a></body></html>")
+            clientsocket.send(http + "Go deploy!")
         elif "GET /deploy "in str(r):
-            clientsocket.send(http + "<html><body><h1> Deploy! </h1><br> <a href='/'> go back </a></body></html>")
+            clientsocket.send(http + "Deploy!")
             gd.deploy()
             
        
