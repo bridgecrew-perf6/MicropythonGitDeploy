@@ -11,7 +11,7 @@ class HTTPClient:
         addr = socket.getaddrinfo(self.host,443)[0][-1]
         self.s.connect(addr)
         self.s.setblocking(True)
-        self.s.settimeout(1)
+        self.s.settimeout(0.5)
         print('socket connected')
     
     def get(self, url):
@@ -26,9 +26,9 @@ class HTTPClient:
         try:
             rec_bytes = self.s.recv(maxBytes)
             buffer = rec_bytes
+            print("Received: " + str(len(rec_bytes)))
 
             while len(rec_bytes) != 0:
-                
                 rec_bytes = self.s.recv(maxBytes)
                 buffer = buffer + rec_bytes
         except:

@@ -17,23 +17,35 @@ class GitHubClient:
         self.files = []
         
 
-        folder = self.parseFolder("/flash", remoteUrl)
+        self.parseFolder("/flash", remoteUrl)
     
     def parseFolder(self, clientDirectory, remoteUrl):
-        print(remoteUrl)
+        print("Parse Folder: " + remoteUrl)
         contents = self.client.get(remoteUrl)
         parts = contents.decode("utf-8").split("\r\n\r\n", 1)
         
         jsonObject = json.loads(parts[1])
 
         for i in jsonObject: 
-            name = i["name"];
+            name = i["name"]
             type = i["type"]
-            if type == "file":
+            if type == "file" and i["download_url"] is not None:
                 fileUrl = i["download_url"]
                 self.files.append(GHFile(clientDirectory, name, fileUrl))
             elif type == "dir":
+                #either a directory in the project or a submodule
                 fileUrl = i["url"]
-                print(fileUrl)
+                print("File URL:" + fileUrl)
                 self.parseFolder(clientDirectory + "/"+ name, fileUrl)
-        
+            elif type == "file" and i["git_url"] is not None: #Submodule
+                git_url = i["git_url"]
+                #"git_url": "https://api.github.com/repos/dntoll/ANSIConsole/git/trees/8277ea0646faf079cb3d5b518a57c748dafc178d",
+                parts = git_url.split("https://api.github.com")
+                repoparts = parts[1].split("/git/trees/")
+                print("parts:")
+                print(repoparts[0])#/repos/dntoll/ANSIConsole
+                subModuleRemoteUrl = repoparts[0] + "/contents"
+                #either a directory in the project or a submodule
+                fileUrl = i["git_url"]
+                print("Submodule URL:" + fileUrl)
+                self.parseFolder(clientDirectory + "/"+ name, subModuleRemoteUrl)
