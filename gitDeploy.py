@@ -3,6 +3,7 @@ from GitHubClient import GitHubClient
 from LoPyFileSaver import LoPyFileSaver
 import secrets
 import machine
+import _thread
 
 class gitDeploy:
 
@@ -11,6 +12,7 @@ class gitDeploy:
         self.repoName = repoName
         self.filesToKeep = filesToKeep
         self.ignoreTheseFiles = ignoreTheseFiles
+
 
     def deploy(self):
         c = HTTPClient('api.github.com', secrets.basicAuthentication)

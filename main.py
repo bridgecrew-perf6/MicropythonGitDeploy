@@ -3,6 +3,7 @@ import secrets
 
 from network import WLAN
 from gitDeploy import gitDeploy
+from DeployServer import DeployServer
 
 
 
@@ -25,3 +26,4 @@ ignoreUpload=[".gitmodules", ".gitignore", 'pymakr.conf']
 gd = gitDeploy("dntoll", "micropython-git-deploy", filesToKeep, ignoreUpload)
 
 
+ds = DeployServer(gd, wlan, 80)
