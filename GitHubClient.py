@@ -21,10 +21,12 @@ class GitHubClient:
     
     def parseFolder(self, clientDirectory, remoteUrl):
         print("Parse Folder: " + remoteUrl)
-        contents = self.client.get(remoteUrl)
-        parts = contents.decode("utf-8").split("\r\n\r\n", 1)
+        response = self.client.get(remoteUrl)
         
-        jsonObject = json.loads(parts[1])
+        
+        jsonObject = json.loads(response.body)
+
+        print(response.headers)
 
         for i in jsonObject: 
             name = i["name"]

@@ -1,14 +1,17 @@
 
+
 import os
 
 class LoPyFileSaver:
-    def __init__(self, httpClient):
+    def __init__(self, httpClient, filesToKeep, ignoreUpload):
         self.client = httpClient
+        self.filesToKeep = filesToKeep
+        self.ignoreUpload = ignoreUpload
 
     def removeOldFiles(self):
         
         for fileOrDir in os.listdir():
-            if not fileOrDir == "secrets.py":
+            if not fileOrDir in self.filesToKeep:
                 try:
                     os.remove(fileOrDir)
                 except:
@@ -20,6 +23,11 @@ class LoPyFileSaver:
                     os.rmdir(directory)
 
     def downloadAndSave(self, localFolder, fileName, remoteURL):
+
+
+        if fileName in self.ignoreUpload:
+            return
+
         oldDir = os.getcwd()
         try:
             os.chdir(localFolder)
@@ -27,12 +35,10 @@ class LoPyFileSaver:
             os.mkdir(localFolder)
             os.chdir(localFolder)
 
-        contents = self.client.get(remoteURL)
-        parts = contents.decode("utf-8").split("\r\n\r\n", 1)
-        filePart = parts[1]
+        response = self.client.get(remoteURL)
 
         with open(fileName, 'w') as datafile:
-            datafile.write(filePart)
+            datafile.write(response.body)
         datafile.close()
         print(fileName + ' written.')
         
