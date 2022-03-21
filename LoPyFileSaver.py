@@ -40,6 +40,6 @@ class LoPyFileSaver:
         with open(fileName, 'w') as datafile:
             datafile.write(response.body)
         datafile.close()
-        print(fileName + ' written.')
+        print(fileName + ' written to ' +  localFolder)
         
         os.chdir(oldDir)
