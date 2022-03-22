@@ -8,6 +8,7 @@ class LoPyFileSaver:
         self.filesToKeep = filesToKeep
         self.ignoreUpload = ignoreUpload
 
+
     def removeOldFiles(self):
         
         for fileOrDir in os.listdir():

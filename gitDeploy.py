@@ -3,7 +3,7 @@ try:
     from MicropythonGitDeploy.GitHubClient import GitHubClient
     from MicropythonGitDeploy.LoPyFileSaver import LoPyFileSaver
 except:
-    #this to make sure it works with main.py in this library
+    #this to make sure it works with main.py in this library for testing
     from HTTPClient import HTTPClient
     from GitHubClient import GitHubClient
     from LoPyFileSaver import LoPyFileSaver
