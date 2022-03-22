@@ -9,6 +9,7 @@ import time
 
 
 wlan = WLAN()
+wlan.init()
 wlan.connect(ssid=secrets.ssid, auth=(WLAN.WPA2, secrets.pwa))
 print('connecting..',end='')
 while not wlan.isconnected():
@@ -20,5 +21,5 @@ print('connected')
 
 filesToKeep=["secrets.py"]
 ignoreUpload=[".gitmodules", ".gitignore", 'pymakr.conf']
-gd = gitDeploy("dntoll", "micropython-git-deploy", filesToKeep, ignoreUpload)
+gd = gitDeploy("dntoll", "MicropythonGitDeploy", filesToKeep, ignoreUpload)
 ds = DeployServer(gd, wlan, 80)
