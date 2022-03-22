@@ -9,9 +9,21 @@ The update is like this.
  * Download a list of all files and folders, recursively going through the different folders in the repo, including submodules, always main thread
  * Download and save each file
 
-# secrets.py
+
+## Todo:
+
+ * Version check ( dont update if same version )
+ * Display HTTP errors 
+ * Initiate Deploy in other ways (like LoRaMesh message etc)
+ * Rename, download, restore on fail update mechanism
+ * Error messages for common errors
 
 
+## Example usage 
+
+Place the code of this repo in your (can be submodule)
+
+## secrets.py
 You need to have the following information in a file named secrets.py
 ```python
 ssid = 'Your SSID' #ssid for Wifi used for OTA using the release_push.py
@@ -23,7 +35,6 @@ pwa = 'WIFY-Pass' #wifi-passord used OTA using the release_push.py
 basicAuthentication = ""
 ```
 
-Example usage 
 
 ```python 
 #main.py
