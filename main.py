@@ -23,3 +23,5 @@ filesToKeep=["secrets.py"]
 ignoreUpload=[".gitmodules", ".gitignore", 'pymakr.conf']
 gd = gitDeploy("dntoll", "MicropythonGitDeploy", filesToKeep, ignoreUpload)
 ds = DeployServer(gd, wlan, 80)
+
+print(wlan.ifconfig()[0])

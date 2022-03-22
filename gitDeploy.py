@@ -1,6 +1,12 @@
-from MicropythonGitDeploy.HTTPClient import HTTPClient
-from MicropythonGitDeploy.GitHubClient import GitHubClient
-from MicropythonGitDeploy.LoPyFileSaver import LoPyFileSaver
+try:
+    from MicropythonGitDeploy.HTTPClient import HTTPClient
+    from MicropythonGitDeploy.GitHubClient import GitHubClient
+    from MicropythonGitDeploy.LoPyFileSaver import LoPyFileSaver
+except:
+    #this to make sure it works with main.py in this library
+    from HTTPClient import HTTPClient
+    from GitHubClient import GitHubClient
+    from LoPyFileSaver import LoPyFileSaver
 import secrets
 import machine
 import _thread
