@@ -23,10 +23,18 @@ class GitHubClient:
         #print("Parse Folder: " + remoteUrl)
         response = self.client.get(remoteUrl)
         
-        
+        if response.failed():
+            
+            if response.needsAuthentication():
+                raise Exception("401 Unauthorized, the basicAuthentication in secrets.py needs to be set")
+            else:
+                print(response.headers)
+                raise Exception(response.headers)
+            
         jsonObject = json.loads(response.body)
 
-        #print(response.headers)
+        
+        
 
         for i in jsonObject: 
             name = i["name"]

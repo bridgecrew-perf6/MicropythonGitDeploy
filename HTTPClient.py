@@ -8,6 +8,17 @@ class HTTPResponse:
     def __init__(self, responseBytes):
         header, self.body = responseBytes.decode("utf-8").split("\r\n\r\n", 1)
         self.headers = header.split("\r\n")
+    def failed(self):
+
+        if self.headers[0].endswith("200 OK"):
+            return False
+        return True
+
+    def needsAuthentication(self):
+
+        if self.headers[0].endswith("401 Unauthorized"):
+            return True
+        return False
 
 
 class HTTPClient:
