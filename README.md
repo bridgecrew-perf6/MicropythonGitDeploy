@@ -37,33 +37,17 @@ basicAuthentication = ""
 
 
 ```python 
-#main.py
+#setup internet connection
 import secrets
-from network import WLAN
 from gitDeploy import gitDeploy
 from DeployServer import DeployServer
-import time
+from wlanhelper import wlanhelper
 
-#Connect to wifi
-wlan = WLAN()
-wlan.init()
-wlan.connect(ssid=secrets.ssid, auth=(WLAN.WPA2, secrets.pwa))
-print('connecting..',end='')
-while not wlan.isconnected():
-    time.sleep(1)
-    print('.',end='')
-print('connected')
-
-#dont remove these files on an upload:
 filesToKeep=["secrets.py"]
-#dont upload these files:
 ignoreUpload=[".gitmodules", ".gitignore", 'pymakr.conf']
-#GH-username of repo and repo name
 gd = gitDeploy("dntoll", "MicropythonGitDeploy", filesToKeep, ignoreUpload)
 
-#gd.deploy() <- triggers a deploy of https://github.com/dntoll/MicropythonGitDeploy
-
-#Start an optional web-server that initiates an deploy on "http://ip/deploy
+wlan = wlanhelper()
 ds = DeployServer(gd, wlan, 80)
-#Get the ip
+
 print(wlan.ifconfig()[0])
