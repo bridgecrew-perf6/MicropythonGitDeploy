@@ -13,4 +13,3 @@ ds = DeployServer(gd, wlan, 80)
 
 print(wlan.ifconfig()[0])
 
-print("Hej på dig")
